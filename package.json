@@ -1,0 +1,21 @@
+{
+  "name": "dev-sathi",
+  "version": "1.0.0",
+  "description": "it is a application for developers to current",
+  "keywords": [
+    "javascript",
+    "nodejs",
+    "backend"
+  ],
+  "license": "ISC",
+  "author": "Harsh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start":"node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
