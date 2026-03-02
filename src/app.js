@@ -54,12 +54,26 @@ app.delete("/user", async (req, res)=>{
         
 })
 // this is a patch request it is used to update 
-app.patch("/user", async (req, res)=>{
-        const userId = req.body.userId;
+app.patch("/user/userId", async (req, res)=>{
+        const userId = req.params?.userId;
         const data= req.body;
         try{
-            await User.findByIdAndUpdate(userId, data);
+            const ALLOWED_UPDATES =["photourl", "about", "firstName","skills"];
+
+            const isUpdatedAllowed = Object.keys(data).every((k)=>
+                ALLOWED_UPDATES.includes(k)
+            );
+
+            if(!isUpdatedAllowed){
+                throw new Error("Update is not allowed");
+            }
+            if(data?.skills.length>10){
+                throw new Error ("more than 10 skills are not allowed");
+            }
+            await User.findByIdAndUpdate(userId, data,{runValidators:true});
+            
             res.send("user update successfully");
+            
         }
         catch(err){
             res.status(400).send("error"+err.message);
